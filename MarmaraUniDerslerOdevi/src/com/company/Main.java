@@ -39,6 +39,7 @@ public class Main {
         dersler.writeList();
 
 
+        System.out.println("********************************************");
         int islem;
 
         System.out.println(" 1 - Ders kodu ile ders çağırma");
@@ -54,8 +55,9 @@ public class Main {
             case 1:
                 String dersKodu;
                 System.out.println("Aramak istediğiniz dersin kodunuz Giriniz (blm1003)");
-                dersKodu = scanner.nextLine();
-                System.out.println(dersler.getByCode(dersKodu).getDersAdi());
+                dersKodu = scanner.next();
+                DersNode dersNode = dersler.getByCode(dersKodu);
+                System.out.println(dersNode);
                 break;
             case 2:
                 int donem;
@@ -68,7 +70,17 @@ public class Main {
 
                 break;
             case 3:
-                System.out.println("3");
+                int ilk, son;
+                System.out.println("Dönem aralığını giriniz önce ilk sonra son şeklinde");
+                ilk = scanner.nextInt();
+                son = scanner.nextInt();
+
+                ArrayList<DersNode> istenilenDersler = (ArrayList<DersNode>) dersler.getByRange(ilk, son);
+
+                for (DersNode ders : istenilenDersler){
+                    System.out.println(ders);
+                }
+
                 break;
             default:
                 System.out.println("Geçersiz işlem seçildi");
@@ -77,13 +89,5 @@ public class Main {
     }
 
 
-    /**
-     * @param ilk hangi dönemler arasındanın başlangıcı
-     * @param son hangi dönemler arasındanın bitişi
-     * @return o dönemler arasındaki derslerin hepsini liste şeklinde döndürür.
-     */
-    public List<DersNode> getByRange(int ilk, int son){
-        //verilen dönemler dahil dönemlerdeki dersleri döndür
-        return null;
-    }
+
 }

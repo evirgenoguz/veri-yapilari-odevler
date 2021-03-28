@@ -81,6 +81,49 @@ public class DersNodeLL {
         }
     }
 
+    public void Remove(DersNode dersNode){
+        if (dersNode == last){
+            //son elemansa
+            last = dersNode.previous;
+            dersNode = null;
+        }
+        else if (dersNode == head){
+            //ilk elemansa
+            dersNode.next = head;
+            dersNode = null;
+        }
+        else{
+            //ara elemansa
+            DersNode temp1 = null;
+            DersNode temp2 = null;
+            temp1 = dersNode.previous;
+            temp2 = dersNode.next;
+            dersNode = null;
+            temp1.next = temp2;
+            temp2.previous = temp1;
+        }
+    }
+
+    public DersNode Next(DersNode dersNode){
+        if(dersNode != last){
+            return dersNode.next;
+        }
+        else {
+            System.out.println("Son elemandan sonra eleman yok kardeş");
+            return null;
+        }
+    }
+
+    public int Size(){
+        DersNode pointer = head;
+        int sayac = 0;
+        while (pointer != null){
+            sayac++;
+            pointer = pointer.next;
+        }
+        return sayac;
+    }
+
     /**
      * @param isEmpty methodum listenin boş olup olmadığını kontrol eder
      * @return doluysa true boşsa false döndürür
@@ -107,8 +150,7 @@ public class DersNodeLL {
     public DersNode getByCode(String dersKodu){
         DersNode pointer = head;
         while (pointer != null){
-            if (pointer.getDersKodu() == dersKodu){
-
+            if (pointer.getDersKodu().equals(dersKodu)){
                 return pointer;
             }
             pointer = pointer.next;
@@ -132,4 +174,20 @@ public class DersNodeLL {
         return donemDersleri;
     }
 
+    /**
+     * @param ilk hangi dönemler arasındanın başlangıcı
+     * @param son hangi dönemler arasındanın bitişi
+     * @return o dönemler arasındaki derslerin hepsini liste şeklinde döndürür.
+     */
+    public List<DersNode> getByRange(int ilk, int son){
+        ArrayList<DersNode> istenilenDersler = new ArrayList<>();
+        DersNode pointer = head;
+        while (pointer != null){
+            if(pointer.getDonem() >= ilk && pointer.getDonem() <= son){
+                istenilenDersler.add(pointer);
+            }
+            pointer = pointer.next;
+        }
+        return istenilenDersler;
+    }
 }
